@@ -1,9 +1,6 @@
 pragma solidity 0.4.24;
 
 
-
-
-
 import "./MintingERC20.sol";
 
 import "./ICO.sol";

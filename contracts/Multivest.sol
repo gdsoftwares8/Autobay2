@@ -94,12 +94,13 @@ contract Multivest is Ownable {
 
         address _address,
 
-        uint256 _unixTimestamp,
-        uint256 _timeExpired
+        uint8 _v,
 
+        bytes32 _r,
 
+        bytes32 _s
 
-    ) public payable onlyAllowedMultivests(abi.encodePacked(keccak256(msg.sender,_unixTimestamp,_timeExpired))) {
+    ) public payable onlyAllowedMultivests(verify(keccak256(msg.sender),_v, _r, _s)) {
 
         require(_address == msg.sender && buy(msg.sender, msg.value) == true);
 
@@ -110,7 +111,6 @@ contract Multivest is Ownable {
     function verify(bytes32 _hash, uint8 _v, bytes32 _r, bytes32 _s) internal pure returns(address) {
 
         bytes memory prefix = "\x19Ethereum Signed Message:\n32";
-
 
 
         return ecrecover(keccak256(prefix, _hash), _v, _r, _s);

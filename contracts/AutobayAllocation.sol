@@ -29,13 +29,8 @@ contract AutobayAllocation is Ownable {
 
 
     TeamsAllocation[] public team;
-
-    uint256 public minted;
     
-    uint256 public periods;
-
-    uint256 public allocatedPeriods;
-
+    
     uint256  public  cliff;
 
     uint256 public cliffAmount;
