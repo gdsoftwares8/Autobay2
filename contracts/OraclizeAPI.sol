@@ -1552,8 +1552,7 @@ contract usingOraclize {
 
         bytes32 queryId = oraclize_query(_delay, "random", args, _customGasLimit);
 
-        oraclize_randomDS_setCommitment(queryId, keccak256(bytes8(_delay), args[1], sha256(args[0]), args[2]));
-
+        oraclize_randomDS_setCommitment(queryId, keccak256(abi.encodePacked(bytes8(_delay), args[1], sha256(args[0]), args[2])));
         return queryId;
 
     }
@@ -1774,7 +1773,7 @@ contract usingOraclize {
 
         copyBytes(proof, ledgerProofLength, 32, keyhash, 0);
 
-        if (!(keccak256(keyhash) == keccak256(sha256(context_name, queryId)))) return false;
+        if (!(keccak256(keyhash) == keccak256(abi.encodePacked(sha256(abi.encodePacked(context_name, queryId)))))) return false;
 
 
 
@@ -1810,7 +1809,7 @@ contract usingOraclize {
 
         bytes32 sessionPubkeyHash = sha256(sessionPubkey);
 
-        if (oraclize_randomDS_args[queryId] == keccak256(commitmentSlice1, sessionPubkeyHash)){ //unonce, nbytes and sessionKeyHash match
+        if (oraclize_randomDS_args[queryId] == keccak256(abi.encodePacked(commitmentSlice1, sessionPubkeyHash))){ //unonce, nbytes and sessionKeyHash match
 
             delete oraclize_randomDS_args[queryId];
 

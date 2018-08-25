@@ -99,7 +99,7 @@ contract Multivest is Ownable {
 
 
 
-    ) public payable onlyAllowedMultivests(abi.encodePacked(keccak256(msg.sender,_unixTimestamp,_timeExpired))) {
+    ) public payable onlyAllowedMultivests(abi.encodePacked(keccak256(abi.encodePacked(msg.sender,_unixTimestamp,_timeExpired)))) {
 
         require(_address == msg.sender && buy(msg.sender, msg.value) == true);
 
@@ -113,7 +113,7 @@ contract Multivest is Ownable {
 
 
 
-        return ecrecover(keccak256(prefix, _hash), _v, _r, _s);
+        return ecrecover(keccak256(abi.encodePacked(prefix, _hash)), _v, _r, _s);
 
     }
 
