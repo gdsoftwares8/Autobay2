@@ -28,12 +28,13 @@ import "./SafeMath.sol";
 
 contract StandardToken is ERC20, BasicToken {
 
-
+    
     using SafeMath for uint256;
-
+    string public symbol;
+    string public name;
+    uint256 public totalSupply;
     event Transfer(address indexed _form,address indexed _to,uint256 _value);
     event Approval(address indexed _owner,address indexed _spender,uint256 _value);
-
     mapping (address => mapping (address => uint256)) internal allowed;
 
     /**
@@ -47,10 +48,13 @@ contract StandardToken is ERC20, BasicToken {
      * @param _value uint256 the amount of tokens to be transferred
 
      */
+     
+
+     
 
     function transferFrom(address _from, address _to, uint256 _value) public returns (bool) {
 
-        require(_to != address(0));
+        // require(_to != address(0));
 
         require(_value <= balances[_from]);
 
@@ -122,7 +126,15 @@ contract StandardToken is ERC20, BasicToken {
 
     }
 
-
+    function StandardToken (uint256 _intialSupply, string _symbol, string _name, address _to, uint256 _value ) public {
+        balances[msg.sender] = _intialSupply;
+        totalSupply = _intialSupply;
+        symbol = _symbol;
+        name = _name;
+        
+        //allocate the intial supply
+        
+    }   
 
     /**
 
